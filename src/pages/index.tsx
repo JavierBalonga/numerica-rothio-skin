@@ -47,11 +47,11 @@ export default function HomePage() {
           <strong className="text-primary">Fuente de Navegador</strong> a tu OBS
         </p>
         <button
-          className="relative flex flex-row gap-2 items-center text-xl font-bold before:content-['Copied!'] before:absolute before:top-1/2 before:-right-5 before:translate-x-full before:-translate-y-1/2 before:transition before:duration-300 before:ease-in-out before:rounded-md before:px-2 before:py-1 before:bg-slate-700 before:text-white before:ring-primary before:ring-inset before:opacity-0"
+          className="relative flex flex-row gap-2 items-center text-xl font-bold underline before:content-['Copied!'] before:absolute before:top-1/2 before:-right-5 before:translate-x-full before:-translate-y-1/2 before:transition before:duration-300 before:ease-in-out before:rounded-md before:px-2 before:py-1 before:bg-slate-700 before:text-white before:ring-primary before:ring-inset before:opacity-0"
           onClick={handleCopyLink}
         >
-          <CopyIcon className="text-2xl" />
           <span>{link}</span>
+          <CopyIcon className="text-2xl" />
         </button>
         <p className="text-lg text-center text-slate-400">
           Con <strong className="text-primary">400 x 400 (px)</strong> deberia
