@@ -18,10 +18,10 @@ export default function HomePage() {
   const handleCopyLink = (e: MouseEvent<HTMLButtonElement>) => {
     navigator.clipboard.writeText(link);
     const element = e.currentTarget;
-    element.classList.add("before:animate-pulse");
+    element.classList.add("before:opacity-100");
     setTimeout(() => {
-      element.classList.remove("before:animate-pulse");
-    }, 2000);
+      element.classList.remove("before:opacity-100");
+    }, 1000);
   };
 
   return (
@@ -58,7 +58,9 @@ export default function HomePage() {
           andar correctamente
           <br />
           luego puedes redimensionar si gustas
-          <br />Y por ultimo agregale un filtro de color de la siguiente manera:
+          <br />Y por ultimo agregale un{" "}
+          <strong className="text-primary">filtro de color</strong> de la
+          siguiente manera:
         </p>
         <img src={colorFilterExampleImg} alt="Color Filter Examples" />
       </div>
