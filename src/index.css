@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    background-color: theme(colors.slate.900);
+    color: theme(colors.primary);
+  }
+
+  .root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    background-color: theme(colors.black);
+  }
+}
+
+@layer components {
+  .loading {
+    display: inherit;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    animation: 2s linear 0s infinite normal none running
+      react-spinners-DotLoader-rotate;
+  }
+
+  .loading::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    bottom: auto;
+    height: 30px;
+    width: 30px;
+    background-color: currentColor;
+    border-radius: 100%;
+    animation: 2s linear 0s infinite normal none running
+      react-spinners-DotLoader-bounce;
+  }
+
+  .loading::before {
+    content: "";
+    position: absolute;
+    top: auto;
+    bottom: 0px;
+    height: 30px;
+    width: 30px;
+    background-color: currentColor;
+    border-radius: 100%;
+    animation: 2s linear 1s infinite normal none running
+      react-spinners-DotLoader-bounce;
+  }
+
+  @keyframes react-spinners-DotLoader-rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes react-spinners-DotLoader-bounce {
+    0%,
+    100% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }
+}
