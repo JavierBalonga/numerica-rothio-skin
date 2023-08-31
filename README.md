@@ -15,5 +15,5 @@ And that's it
 
 ## It looks like this:
 
-![Preview](./public/preview.png)
+![Preview](./preview.png)
 

@@ -1,5 +1,6 @@
 import { MouseEvent, useMemo, useState } from "react";
 import CopyIcon from "../components/icons/CopyIcon";
+import colorFilterExampleImg from "../assets/color-filter-example.png";
 
 export default function HomePage() {
   const [twitchUsername, setTwitchUsername] = useState("");
@@ -59,7 +60,7 @@ export default function HomePage() {
           luego puedes redimensionar si gustas
           <br />Y por ultimo agregale un filtro de color de la siguiente manera:
         </p>
-        <img src="/color-filter-example.png" />
+        <img src={colorFilterExampleImg} alt="Color Filter Examples" />
       </div>
     </div>
   );
