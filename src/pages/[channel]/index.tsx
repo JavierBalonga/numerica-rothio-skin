@@ -40,7 +40,7 @@ const useStore = create(
 
       registerNewNumber: (newNumber, newUser) => {
         set((prev) => {
-          // if (prev.user === newUser) return {};
+          if (prev.user === newUser) return {};
 
           const isSuccess = newNumber === prev.number + 1;
           if (!isSuccess) {
