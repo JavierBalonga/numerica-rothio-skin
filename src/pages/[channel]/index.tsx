@@ -247,7 +247,7 @@ export default function GamePage() {
           </div>
         </div>
       </div>
-      <p className="text-xl font-bold text-white bg-primary py-2 px-6 rounded-3xl absolute top-0 left-1/2 -translate-x-1/2">
+      <p className="text-xl font-bold text-white bg-primary py-2 px-6 rounded-3xl absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
         Max Score: {maxScore}
         {maxScoreUser && (
           <>
@@ -257,7 +257,7 @@ export default function GamePage() {
         )}
       </p>
       {(status === Status.GAME_OVER || status === Status.STARTED) && (
-        <p className="text-xl font-bold text-white bg-primary py-2 px-6 rounded-3xl absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap">
+        <p className="text-xl font-bold text-white bg-primary py-2 px-6 rounded-3xl absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
           {status === Status.GAME_OVER ? `Blame on ${user}!` : user}
         </p>
       )}
