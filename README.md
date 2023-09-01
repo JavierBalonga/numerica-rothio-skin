@@ -2,6 +2,8 @@
 
 This is a Re-Skin of the original [Numerica](https://github.com/rothiotome/numerica-twitch) game developed by [RothioTome](https://github.com/rothiotome)
 
+## [Play It Here](https://javierbalonga.github.io/numerica-rothio-skin/) 
+
 ## How to Play:
 
 Numerica is a minigame created by Rothio Tome and designed for use on Twitch.  
@@ -16,5 +18,3 @@ And that's it
 ## It looks like this:
 
 ![Preview](./preview.png)
-
-## [You check the online version here](https://javierbalonga.github.io/numerica-rothio-skin/) 
