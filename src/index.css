@@ -3,12 +3,22 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: Sunny Spells;
+    font-weight: 500;
+    src: url(/sunny-spells.woff) format("ttf");
+  }
+
   body {
     min-height: 100vh;
     min-height: 100svh;
     display: flex;
     background-color: theme(colors.slate.900);
     color: theme(colors.primary);
+  }
+
+  * {
+    font-family: Sunny Spells, sans-serif;
   }
 
   .root {

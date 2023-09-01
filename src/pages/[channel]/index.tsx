@@ -6,11 +6,11 @@ import { persist } from "zustand/middleware";
 import clamp from "../../utils/clamp";
 import lerp from "../../utils/lerp";
 
-const INITIAL_BUBBLE_ANIMATION_DURATION = 16000;
+const INITIAL_BUBBLE_ANIMATION_DURATION = 10000;
 const INITIAL_NUMBER_CONCURRENT_BUBBLES = 4;
 
-const FINAL_BUBBLE_ANIMATION_DURATION = 600;
-const FINAL_NUMBER_CONCURRENT_BUBBLES = 42;
+const FINAL_BUBBLE_ANIMATION_DURATION = 1000;
+const FINAL_NUMBER_CONCURRENT_BUBBLES = 40;
 
 enum Status {
   IDLE = "IDLE",
@@ -19,15 +19,14 @@ enum Status {
 }
 
 interface Store {
-  maxScore: number;
-  maxScoreUser: string;
-
   status: Status;
   number: number;
   user: string;
+  maxScore: number;
+  maxScoreUser: string;
 
-  registerNewNumber: (newNumber: number, user: string) => void;
-  setMaxScore: (maxScore: number, maxScoreUser: string) => void;
+  registerNewNumber: (newNumber: number, newUser: string) => void;
+  setMaxScore: (number: number, user: string) => void;
 }
 
 const useStore = create(
@@ -36,20 +35,19 @@ const useStore = create(
       status: Status.IDLE,
       number: 0,
       user: "",
-
       maxScore: 0,
       maxScoreUser: "",
 
-      registerNewNumber: (newNumber: number, user: string) => {
+      registerNewNumber: (newNumber, newUser) => {
         set((prev) => {
-          if (prev.user === user) return {};
+          // if (prev.user === newUser) return {};
 
           const isSuccess = newNumber === prev.number + 1;
           if (!isSuccess) {
             return {
               status: prev.number === 0 ? Status.IDLE : Status.GAME_OVER,
               number: 0,
-              user: user,
+              user: newUser,
             };
           }
 
@@ -58,16 +56,16 @@ const useStore = create(
             return {
               status: Status.STARTED,
               number: prev.number + 1,
-              user: user,
+              user: newUser,
             };
           }
 
           return {
             status: Status.STARTED,
             number: prev.number + 1,
-            user: user,
+            user: newUser,
             maxScore: prev.number + 1,
-            maxScoreUser: user,
+            maxScoreUser: newUser,
           };
         });
       },
@@ -195,19 +193,25 @@ export default function GamePage() {
       const { duration, numberOfBubbles } = bubbleAnimation.current;
       const timeBetweenBubbles = duration / numberOfBubbles;
       if (timeBetweenBubbles < actualTime - lastShot) {
-        const bubble = document.createElement("div");
-        bubble.className =
-          "absolute bg-white rounded-full top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 animate-bubble";
-
         const radius = 35;
         const alpha = Math.random() * Math.PI * 2;
         const targetTop = Math.sin(alpha) * radius + 50;
         const targetLeft = Math.cos(alpha) * radius + 50;
 
+        const bubble = document.createElement("div");
+        bubble.classList.add("absolute");
+        bubble.classList.add("bg-white");
+        bubble.classList.add("rounded-full");
+        bubble.classList.add("top-1/2");
+        bubble.classList.add("left-1/2");
+        bubble.classList.add("-translate-y-1/2");
+        bubble.classList.add("-translate-x-1/2");
+        bubble.classList.add("animate-bubble");
         bubble.style.setProperty("--target-top", `${targetTop}%`);
         bubble.style.setProperty("--target-left", `${targetLeft}%`);
         bubble.style.setProperty("--animation-duration", `${duration}ms`);
         bubbleContainer.current.appendChild(bubble);
+
         setTimeout(() => {
           bubbleContainer.current?.removeChild(bubble);
         }, duration);
