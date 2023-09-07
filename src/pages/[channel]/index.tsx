@@ -5,6 +5,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import clamp from "../../utils/clamp";
 import lerp from "../../utils/lerp";
+import { twMerge } from "tailwind-merge";
 
 const INITIAL_BUBBLE_ANIMATION_DURATION = 10000;
 const INITIAL_NUMBER_CONCURRENT_BUBBLES = 4;
@@ -234,9 +235,26 @@ export default function GamePage() {
   return (
     <div className="relative">
       <div className="overflow-hidden relative flex items-center justify-center w-[400px] h-[400px] rounded-full ">
-        <span className="text-8xl font-bold leading-tight text-white relative z-10">
-          {number}
-        </span>
+        {[number - 1, number].map((num) =>
+          num < 0 ? null : (
+            <div
+              key={num}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[200px] h-[200px] flex justify-center items-center bg-black p-4 rounded-full overflow-hidden mix-blend-screen contrast-[100]"
+            >
+              <span
+                className={twMerge(
+                  "text-8xl font-bold leading-tight text-white blur-[1px]",
+                  num === number
+                    ? "animate-bubble-fade-in"
+                    : "animate-bubble-fade-out opacity-0"
+                )}
+              >
+                {num}
+              </span>
+            </div>
+          )
+        )}
+
         <div className="absolute -inset-[100px]">
           <div className="absolute inset-0 bg-primary"></div>
           <div

@@ -9,6 +9,8 @@ export default {
     },
     animation: {
       bubble: "bubble var(--animation-duration) linear",
+      "bubble-fade-in": "bubble-fade-in 500ms linear",
+      "bubble-fade-out": "bubble-fade-out 500ms linear",
     },
     keyframes: {
       bubble: {
@@ -27,6 +29,34 @@ export default {
           top: "var(--target-top)",
           width: "0px",
           height: "0px",
+        },
+      },
+      "bubble-fade-in": {
+        "0%": {
+          opacity: 1,
+          transform: "scale(0) transform(-50%, -50%)",
+          "transform-origin": "center center",
+          filter: "blur(25px)",
+        },
+        "100%": {
+          opacity: 1,
+          transform: "scale(1) transform(-50%, -50%)",
+          "transform-origin": "center center",
+          filter: "blur(1px)",
+        },
+      },
+      "bubble-fade-out": {
+        "0%": {
+          opacity: 1,
+          transform: "scale(1) transform(-50%, -50%)",
+          "transform-origin": "center center",
+          filter: "blur(1px)",
+        },
+        "100%": {
+          opacity: 1,
+          transform: "scale(0) transform(-50%, -50%)",
+          "transform-origin": "center center",
+          filter: "blur(25px)",
         },
       },
     },
