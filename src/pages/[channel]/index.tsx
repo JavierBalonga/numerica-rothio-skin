@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import tmi from "tmi.js";
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import clamp from "../../utils/clamp";
 import lerp from "../../utils/lerp";
 import { twMerge } from "tailwind-merge";
+import ConfigMenu from "../../components/ConfigMenu";
+import useGameState, { GameStatus } from "../../providers/GameContext";
+import useConfig from "../../providers/ConfigContext";
 
 const INITIAL_BUBBLE_ANIMATION_DURATION = 10000;
 const INITIAL_NUMBER_CONCURRENT_BUBBLES = 4;
@@ -13,73 +14,9 @@ const INITIAL_NUMBER_CONCURRENT_BUBBLES = 4;
 const FINAL_BUBBLE_ANIMATION_DURATION = 1000;
 const FINAL_NUMBER_CONCURRENT_BUBBLES = 40;
 
-enum Status {
-  IDLE = "IDLE",
-  STARTED = "STARTED",
-  GAME_OVER = "GAME_OVER",
-}
-
-interface Store {
-  status: Status;
-  number: number;
-  user: string;
-  maxScore: number;
-  maxScoreUser: string;
-
-  registerNewNumber: (newNumber: number, newUser: string) => void;
-  setMaxScore: (number: number, user: string) => void;
-}
-
-const useStore = create(
-  persist<Store>(
-    (set) => ({
-      status: Status.IDLE,
-      number: 0,
-      user: "",
-      maxScore: 0,
-      maxScoreUser: "",
-
-      registerNewNumber: (newNumber, newUser) => {
-        set((prev) => {
-          if (prev.user === newUser) return {};
-
-          const isSuccess = newNumber === prev.number + 1;
-          if (!isSuccess) {
-            return {
-              status: prev.number === 0 ? Status.IDLE : Status.GAME_OVER,
-              number: 0,
-              user: newUser,
-            };
-          }
-
-          const isNewMaxScore = newNumber > prev.maxScore;
-          if (!isNewMaxScore) {
-            return {
-              status: Status.STARTED,
-              number: prev.number + 1,
-              user: newUser,
-            };
-          }
-
-          return {
-            status: Status.STARTED,
-            number: prev.number + 1,
-            user: newUser,
-            maxScore: prev.number + 1,
-            maxScoreUser: newUser,
-          };
-        });
-      },
-
-      setMaxScore: (maxScore: number, maxScoreUser: string) => {
-        set(() => ({
-          maxScore: maxScore,
-          maxScoreUser: maxScoreUser,
-        }));
-      },
-    }),
-    { name: "numerica", version: 1 }
-  )
+const bubbleAudios = Array.from(
+  { length: 8 },
+  (_, i) => new Audio(`/bubble-${i}.mp3`)
 );
 
 export default function GamePage() {
@@ -92,15 +29,21 @@ export default function GamePage() {
     maxScoreUser,
     registerNewNumber,
     setMaxScore,
-  } = useStore();
+  } = useGameState();
+  const mute = useConfig((config) => config.mute);
+  const volume = useConfig((config) => config.volume);
   const [twitchClient, setTwitchClient] = useState<tmi.Client | null>(null);
   const bubbleContainer = useRef<HTMLDivElement>(null);
   const bubbleAnimation = useRef<{
     duration: number;
     numberOfBubbles: number;
+    mute: boolean;
+    volume: number;
   }>({
     duration: INITIAL_BUBBLE_ANIMATION_DURATION,
     numberOfBubbles: INITIAL_NUMBER_CONCURRENT_BUBBLES,
+    mute: mute,
+    volume: volume,
   });
 
   useEffect(() => {
@@ -182,8 +125,10 @@ export default function GamePage() {
           factor
         )
       ),
+      mute: mute,
+      volume: volume,
     };
-  }, [number, maxScore]);
+  }, [number, maxScore, mute, volume]);
 
   useEffect(() => {
     let animationRequest: number | null = null;
@@ -214,6 +159,16 @@ export default function GamePage() {
         bubbleContainer.current.appendChild(bubble);
 
         setTimeout(() => {
+          const { mute, volume } = bubbleAnimation.current;
+          if (!mute && volume > 0) {
+            const bubbleAudio =
+              bubbleAudios[Math.floor(Math.random() * bubbleAudios.length)];
+            bubbleAudio.volume = volume;
+            bubbleAudio.play();
+          }
+        }, Math.floor(duration * 0.67));
+
+        setTimeout(() => {
           bubbleContainer.current?.removeChild(bubble);
         }, duration);
 
@@ -233,7 +188,7 @@ export default function GamePage() {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative group">
       <div className="overflow-hidden relative flex items-center justify-center w-[400px] h-[400px] rounded-full ">
         {[number - 1, number].map((num) =>
           num < 0 ? null : (
@@ -274,11 +229,13 @@ export default function GamePage() {
           </>
         )}
       </p>
-      {(status === Status.GAME_OVER || status === Status.STARTED) && (
+      {(status === GameStatus.GAME_OVER || status === GameStatus.STARTED) && (
         <p className="text-xl font-bold text-white bg-primary py-2 px-6 rounded-3xl absolute bottom-0 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
-          {status === Status.GAME_OVER ? `Blame on ${user}!` : user}
+          {status === GameStatus.GAME_OVER ? `Blame on ${user}!` : user}
         </p>
       )}
+
+      <ConfigMenu />
     </div>
   );
 }
