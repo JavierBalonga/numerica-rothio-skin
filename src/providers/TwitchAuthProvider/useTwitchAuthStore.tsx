@@ -27,7 +27,7 @@ const useTwitchAuthStore = create(
       accessToken: null,
       setAccessToken: (accessToken: string | null) => set({ accessToken }),
     }),
-    { name: "twitch-auth", version: 1 }
+    { name: "numerica-twitch-auth", version: 1 }
   )
 );
 
