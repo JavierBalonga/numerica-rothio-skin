@@ -148,10 +148,12 @@ export default function GamePage() {
     },
     [
       setGameState,
+      timeoutUser,
       isAuthenticated,
       enableTimeout,
-      timeoutBase,
       timeoutMultiplier,
+      timeoutBase,
+      channelUser,
     ]
   );
 
