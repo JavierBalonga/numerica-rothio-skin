@@ -195,7 +195,7 @@ export default function GamePage() {
       const { duration, numberOfBubbles } = bubbleAnimation.current;
       const timeBetweenBubbles = duration / numberOfBubbles;
       if (timeBetweenBubbles < actualTime - lastShot) {
-        const radius = 35;
+        const radius = 25;
         const alpha = Math.random() * Math.PI * 2;
         const targetTop = Math.sin(alpha) * radius + 50;
         const targetLeft = Math.cos(alpha) * radius + 50;
@@ -245,7 +245,7 @@ export default function GamePage() {
 
   return (
     <div className="relative group">
-      <div className="overflow-hidden relative flex items-center justify-center w-[400px] h-[400px] rounded-full ">
+      <div className="relative flex items-center justify-center w-[400px] h-[400px] rounded-full">
         {[number - 1, number].map((num) =>
           num < 0 ? null : (
             <div
@@ -266,8 +266,8 @@ export default function GamePage() {
           )
         )}
 
-        <div className="absolute -inset-[100px]">
-          <div className="absolute inset-0 bg-primary"></div>
+        <div className="absolute -inset-[50%]">
+          <div className="absolute inset-0 bg-primary-circle"></div>
           <div
             className="absolute inset-0 bg-black blur-lg contrast-[100] flex items-center justify-center mix-blend-multiply"
             ref={bubbleContainer}

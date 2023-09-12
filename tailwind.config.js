@@ -7,6 +7,10 @@ export default {
         primary: "#ff666f",
         "primary-dark": "#6b2e32",
       },
+      backgroundImage: {
+        "primary-circle":
+          "radial-gradient(closest-side, #ff666f 50%, #000000 50%)",
+      },
     },
     animation: {
       bubble: "bubble var(--animation-duration) linear",
