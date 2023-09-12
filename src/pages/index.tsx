@@ -3,17 +3,9 @@ import CopyIcon from "../components/icons/CopyIcon";
 import colorFilterExampleImg from "../assets/color-filter-example.png";
 
 export default function HomePage() {
-  const [twitchUsername, setTwitchUsername] = useState("");
-
   const link = useMemo(() => {
-    return `${window.location.href}#/${twitchUsername}`;
-  }, [twitchUsername]);
-
-  const handleTwitchUsernameChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setTwitchUsername(e.target.value);
-  };
+    return `${window.location.href}#/game`;
+  }, []);
 
   const handleCopyLink = (e: MouseEvent<HTMLButtonElement>) => {
     navigator.clipboard.writeText(link);
@@ -29,16 +21,6 @@ export default function HomePage() {
       <h1 className="text-4xl font-bold text-white">
         Numerica <span className="underline text-primary">RothioTome</span> Skin
       </h1>
-      <div className="relative rounded-md shadow-sm">
-        <input
-          type="text"
-          name="twitchUsername"
-          className="block w-full rounded-md border-0 py-3 px-6 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary text-2xl sm:leading-6"
-          placeholder="Nombre de twitch..."
-          value={twitchUsername}
-          onChange={handleTwitchUsernameChange}
-        />
-      </div>
       <div className="flex flex-col items-center gap-4">
         <p className="text-lg text-center text-slate-400">
           Para empezar a jugar, Copia la siguiente{" "}

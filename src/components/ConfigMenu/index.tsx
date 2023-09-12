@@ -3,9 +3,11 @@ import ConfigIcon from "../icons/ConfigIcon";
 import CloseIcon from "../icons/CloseIcon";
 import { twMerge } from "tailwind-merge";
 import ConfigMenuContent from "./ConfigMenuContent";
+import useConfig from "../../providers/ConfigContext";
 
 export default function ConfigMenu() {
-  const [open, setOpen] = useState(false);
+  const channel = useConfig((config) => config.channel);
+  const [open, setOpen] = useState(!channel);
 
   const toggleOpen = () => setOpen((prev) => !prev);
 

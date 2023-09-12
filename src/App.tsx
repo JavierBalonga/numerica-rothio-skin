@@ -4,7 +4,8 @@ import Layout from "./pages/layout";
 import Loading from "./pages/loading";
 
 const HomePage = lazy(() => import("./pages"));
-const GamePage = lazy(() => import("./pages/[channel]"));
+const GamePage = lazy(() => import("./pages/game"));
+const DeprecatedGamePage = lazy(() => import("./pages/[channel]"));
 
 export default function App() {
   return (
@@ -19,10 +20,18 @@ export default function App() {
           }
         />
         <Route
-          path="/:channel"
+          path="/game"
           element={
             <Suspense fallback={<Loading />}>
               <GamePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/:channel"
+          element={
+            <Suspense fallback={<Loading />}>
+              <DeprecatedGamePage />
             </Suspense>
           }
         />
