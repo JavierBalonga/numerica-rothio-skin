@@ -1,4 +1,4 @@
-import { MouseEvent, useMemo, useState } from "react";
+import { MouseEvent, useMemo } from "react";
 import CopyIcon from "../components/icons/CopyIcon";
 import colorFilterExampleImg from "../assets/color-filter-example.png";
 

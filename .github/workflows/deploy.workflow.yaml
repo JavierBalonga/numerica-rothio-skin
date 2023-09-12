@@ -13,6 +13,8 @@ jobs:
       contents: write
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
+    env:
+      VITE_TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
 
     steps:
       - name: Checkout

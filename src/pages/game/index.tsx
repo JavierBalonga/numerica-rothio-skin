@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import { useParams } from "react-router-dom";
 import tmi from "tmi.js";
 import clamp from "../../utils/clamp";
 import lerp from "../../utils/lerp";
