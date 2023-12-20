@@ -107,18 +107,19 @@ export default function GamePage() {
           return {};
 
         if (userId === "ildesir" || userId === "NEKERAFA") {
-            timeoutUser({
-              broadcasterId: channelUser.id,
-              moderatorId: channelUser.id,
-              userId: userId,
-              duration: 666,
-            });
-          }
+          timeoutUser({
+            broadcasterId: channelUser.id,
+            moderatorId: channelUser.id,
+            userId: userId,
+            duration: 666,
+          });
           return {
             status: GameStatus.STARTED,
             number: prev.number + 1,
             user: newUser,
           };
+        }
+          
         
         const isSuccess = newNumber === prev.number + 1;
         if (!isSuccess) {
