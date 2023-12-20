@@ -95,7 +95,7 @@ export default function GamePage() {
       if (!userId || !newUser) return;
 
       const newNumber = Number(
-        message.replace(/[^\d\w]+$/, "").replace(/^[^\d\w]+/, "")
+        message.replace(/[^\D\d]+$/, "").replace(/^[^\D\d]+/, "")
       );
       const isFiniteNumber = isFinite(newNumber);
       const isIntegerNumber = newNumber % 1 === 0;
