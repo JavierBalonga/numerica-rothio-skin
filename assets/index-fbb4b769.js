@@ -1,1 +1,0 @@
-import{b as o,p as t}from"./index-42d8a62d.js";const n=o(t(i=>({channel:"",setChannel:e=>i({channel:e}),volume:0,setVolume:e=>i({volume:e}),enableTimeout:!1,setEnableTimeout:e=>i({enableTimeout:e}),timeoutMultiplier:10,setTimeoutMultiplier:e=>i({timeoutMultiplier:e}),timeoutBase:0,setTimeoutBase:e=>i({timeoutBase:e})}),{name:"numerica-config",version:2})),u=n;export{u};

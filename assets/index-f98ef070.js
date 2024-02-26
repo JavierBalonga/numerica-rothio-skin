@@ -1,0 +1,1 @@
+import{e as r,f as n,r as o,j as t}from"./index-f28d4bfa.js";import{u}from"./index-b21507db.js";function c(){const{channel:e}=r(),s=n(),{setChannel:a}=u();return o.useEffect(()=>{e&&(a(e),s("/game"))},[e,a]),t.jsx(t.Fragment,{})}export{c as default};
